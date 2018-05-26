@@ -100,3 +100,6 @@ Android TCP框架(基于MINA 2.0.0-M3)、增加Bytes工厂、无需依赖log4(�
 
 # mina4-android feedback
 Email：engineer.jsp.hn@gmail.com
+
+# mina4-android jar
+*  [mina4-android.jar](https://github.com/Mr-Jiang/mina4-android/blob/master/bin/mina4-android.jar)
