@@ -1,5 +1,5 @@
 # mina4-android description
-Android TCP框架(基于MINA 2.0.0-M3)、增加Bytes工厂、无需依赖log4(新增Mina4Log打印输出日志)，
+Android TCP框架(基于MINA 2.0.0-M3)、增加Bytes工厂、无需依赖slf4j(新增Mina4Log打印输出日志)，
 <br>处理Bytes粘包、半包、断包(ByteArrayDecoder)，需配置自己的首尾标识符，
 <br>如果与首尾标识符相同的数据出现在首尾标识符以内的范围，建议将该数据进行转义，
 <br>如这样配置转义规则(假设首尾标识符是0x7e)：
