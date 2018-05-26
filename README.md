@@ -103,3 +103,17 @@ Email：engineer.jsp.hn@gmail.com
 
 # mina4-android jar
 *  [mina4-android.jar](https://github.com/Mr-Jiang/mina4-android/blob/master/bin/mina4-android.jar)
+
+# License
+Copyright (C) 2018 Engineer-Jsp<br><br>
+Licensed under the Apache License, Version 2.0 (the "License");<br>
+you may not use this file except in compliance with the License.<br>
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
