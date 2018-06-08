@@ -22,10 +22,11 @@ Android TCP框架(基于MINA 2.0.0-M3)、增加Bytes工厂、无需依赖slf4j(�
 					@Override
 					public boolean isResponse(IoSession session, Object message) {
 						// 字节数组编码
-						if (config.getFactory() instanceof ByteArrayCodecFactory) {
+						if (message instanceof IoBuffer)
+							return false;
+						else if (message instanceof byte[])
 						    // 判断服务端响应消息是否是心跳反馈包
 							return isKeepAliveResponse((byte[]) message);
-						}
 						return false;
 					}
 

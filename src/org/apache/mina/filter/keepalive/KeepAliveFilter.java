@@ -400,13 +400,17 @@ public class KeepAliveFilter extends IoFilterAdapter {
 	@Override
 	public void messageReceived(NextFilter nextFilter, IoSession session, Object message) throws Exception {
 
+		// 判断是否是心跳反馈包，避免isRequest、isResponse各调用两次
+		boolean isKeepAliveRequest = messageFactory.isRequest(session, message);
+		boolean isKeepAliveResponse = messageFactory.isResponse(session, message);
+
 		try {
 
 			// 假设当前场景(客户端主动推送心跳，服务端被动响应)
 			// 客户端会定时发送心跳请求（注意定时时间必须小于，服务器端的IDLE监控时间）
 			// 同时需要监听心跳反馈，以此来判断是否与服务器丢失连接
 			// 服务器不会给客户端发送请求包，因此不关注请求包，isRequest方法直接返回false，不做任何处理
-			if (messageFactory.isRequest(session, message)) {
+			if (isKeepAliveRequest) {
 
 				// 如果当前场景属于活跃型连接，isRequest方法需要配置一个规则，用于检测服务端请求是否是心跳请求
 				// 如是，则isRequest方法需返回true
@@ -422,13 +426,18 @@ public class KeepAliveFilter extends IoFilterAdapter {
 			// 假设当前场景(客户端主动推送心跳，服务端被动响应)
 			// 客户端需要关注请求反馈，因此判断该消息是否是心跳反馈包
 			// 配置自己的解析规则，判断消息是否是心跳反馈包，是返回true，不是返回false
-			if (messageFactory.isResponse(session, message)) {
+			if (isKeepAliveResponse) {
 				resetStatus(session);
 			}
 
 		} finally {
+
 			// 当且仅当该消息非心跳包，继续向下传递
-			if (!isKeepAliveMessage(session, message)) {
+			// if (!isKeepAliveMessage(session, message)) {
+			// nextFilter.messageReceived(session, message);
+			// }
+
+			if (!(isKeepAliveRequest || isKeepAliveResponse)) {
 				nextFilter.messageReceived(session, message);
 			}
 		}
@@ -440,12 +449,14 @@ public class KeepAliveFilter extends IoFilterAdapter {
 	 */
 	@Override
 	public void messageSent(NextFilter nextFilter, IoSession session, WriteRequest writeRequest) throws Exception {
+
 		Object message = writeRequest.getMessage();
 
 		// 当且仅当该消息非心跳包，继续发送
 		if (!isKeepAliveMessage(session, message)) {
 			nextFilter.messageSent(session, writeRequest);
 		}
+
 	}
 
 	/**

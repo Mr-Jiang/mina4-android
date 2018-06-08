@@ -661,7 +661,6 @@ public class DefaultIoFilterChain implements IoFilterChain {
 			fireExceptionCaught(e);
 			throw e;
 		}
-
 		if (!request.isEncoded()) {
 			callNextMessageSent(head, session, request);
 		}

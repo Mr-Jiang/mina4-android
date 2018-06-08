@@ -714,7 +714,6 @@ public abstract class AbstractPollingIoProcessor<S extends AbstractIoSession> im
 					break;
 				} catch (Exception e) {
 					ExceptionMonitor.getInstance().exceptionCaught(e);
-
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e1) {
@@ -912,12 +911,10 @@ public abstract class AbstractPollingIoProcessor<S extends AbstractIoSession> im
 				session.unscheduledForFlush();
 
 				SessionState state = getState(session);
-
 				switch (state) {
 				case OPENED:
 					try {
 						boolean flushedAll = flushNow(session, currentTime);
-
 						if (flushedAll && !session.getWriteRequestQueue().isEmpty(session)
 								&& !session.isScheduledForFlush()) {
 							scheduleFlush(session);
@@ -928,7 +925,6 @@ public abstract class AbstractPollingIoProcessor<S extends AbstractIoSession> im
 						IoFilterChain filterChain = session.getFilterChain();
 						filterChain.fireExceptionCaught(e);
 					}
-
 					break;
 
 				case CLOSING:

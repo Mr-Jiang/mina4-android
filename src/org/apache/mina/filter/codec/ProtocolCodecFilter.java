@@ -231,7 +231,7 @@ public class ProtocolCodecFilter extends IoFilterAdapter {
 	 */
 	@Override
 	public void messageReceived(NextFilter nextFilter, IoSession session, Object message) throws Exception {
-		Mina4Log.d(TAG, "Processing a MESSAGE_RECEIVED for session " + session.getId());
+		Mina4Log.d(TAG, "Processing a MESSAGE_RECEIVED for session " + session.getId() + " , " + message);
 
 		if (!(message instanceof IoBuffer)) {
 			nextFilter.messageReceived(session, message);
